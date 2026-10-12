@@ -1,12 +1,12 @@
 """Single-device and torchrun/DDP training with resumable, self-contained checkpoints."""
 
-from contextlib import nullcontext
 import json
 import math
 import os
-from pathlib import Path
 import shutil
 import time
+from contextlib import nullcontext
+from pathlib import Path
 
 import numpy as np
 import safetensors.torch
@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader, DistributedSampler
 
 from .backend import build_model
 from .dataset import LeRobotData
-from .preprocessing import Statistics, PromptTokenizer, compute_statistics, prepare_batch, file_sha256
+from .preprocessing import PromptTokenizer, Statistics, compute_statistics, file_sha256, prepare_batch
 
 
 def learning_rate(step, cfg):

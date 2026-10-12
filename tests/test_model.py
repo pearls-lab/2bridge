@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+
 from twobridge.config import TrainConfig
 from twobridge.losses import flow_loss
 from twobridge.preprocessing import Statistics, prepare_batch
@@ -26,8 +27,9 @@ def test_masked_loss_and_derivative():
 
 
 def test_model_forward_backward_inference_and_strict_reload(tiny_backend, tmp_path):
-    from twobridge.backend import build_model
     import safetensors.torch
+
+    from twobridge.backend import build_model
 
     t = TrainConfig(
         horizon=3, precision="float32", gradient_checkpointing=True, deriv_dims=[0, 1], deriv_weight=0.1

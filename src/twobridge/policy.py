@@ -10,7 +10,7 @@ import torch
 from .backend import build_model
 from .config import Camera, TrainConfig
 from .dataset import image_transform
-from .preprocessing import Statistics, PromptTokenizer, prepare_batch
+from .preprocessing import PromptTokenizer, Statistics, prepare_batch
 
 
 class Policy:

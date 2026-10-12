@@ -2,11 +2,15 @@
 
 import argparse
 import asyncio
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def make_handler(policy):
-    from .wire import pack, unpack
     from websockets.exceptions import ConnectionClosed
+
+    from .wire import pack, unpack
 
     async def handler(socket):
         await socket.send(pack({"implementation": "twobridge", "action_dim": policy.action_dim}))
@@ -20,6 +24,7 @@ def make_handler(policy):
         except ConnectionClosed:
             pass
         except Exception as exc:
+            logger.exception("Policy inference failed")
             await socket.send(f"Policy inference failed: {type(exc).__name__}: {exc}")
             await socket.close(code=1011)
 
@@ -34,6 +39,7 @@ def main():
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
     from websockets.asyncio.server import serve
+
     from twobridge.policy import Policy
 
     policy = Policy(args.checkpoint, args.device)

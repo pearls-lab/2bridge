@@ -34,10 +34,11 @@ def main():
         run(config, args.resume)
         return
     import numpy as np
-    from .dataset import LeRobotData
-    from .preprocessing import compute_statistics, prepare_batch, PromptTokenizer
-    from torch.utils.data import default_collate
     import torch
+    from torch.utils.data import default_collate
+
+    from .dataset import LeRobotData
+    from .preprocessing import PromptTokenizer, compute_statistics, prepare_batch
 
     if args.samples < 1:
         parser.error("--samples must be positive")

@@ -6,9 +6,9 @@ import safetensors.torch
 import sentencepiece
 import torch
 
+from twobridge import training
 from twobridge.backend import build_model
 from twobridge.policy import Policy
-from twobridge import training
 
 
 def test_training_resume_and_portable_inference(make_dataset, tiny_backend, tmp_path, monkeypatch):
@@ -133,6 +133,7 @@ def test_two_process_cpu_ddp(make_dataset, tiny_backend, tmp_path):
             str(path),
         ],
         env={**os.environ, "OMP_NUM_THREADS": "1"},
+        check=False,  # Include both output streams in the assertion below on failure.
         capture_output=True,
         text=True,
         timeout=90,

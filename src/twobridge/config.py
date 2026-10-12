@@ -1,9 +1,9 @@
 """Strict, portable configuration. Paths are relative to the TOML file."""
 
-from dataclasses import asdict, dataclass, field
-from pathlib import Path
 import math
 import tomllib
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
 
 
 @dataclass

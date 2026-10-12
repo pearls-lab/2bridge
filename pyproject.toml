@@ -18,7 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 harness = ["websockets>=15,<16", "msgpack>=1,<2"]
-dev = ["pytest>=8.3,<9", "ruff>=0.11,<1", "build>=1.2,<2"]
+dev = ["pytest>=8.3,<9", "ruff==0.17.0", "build>=1.2,<2"]
 hub = ["huggingface-hub>=0.33,<1"]
 
 [project.scripts]
@@ -35,5 +35,6 @@ where = ["src"]
 testpaths = ["tests"]
 
 [tool.ruff]
+required-version = "==0.17.0"
 line-length = 110
 extend-exclude = ["src/twobridge/_vendor"]

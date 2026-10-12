@@ -1,8 +1,8 @@
 """Shared training/inference transforms; state remains part of the Pi0.5 prompt."""
 
-from dataclasses import dataclass
 import hashlib
 import json
+from dataclasses import dataclass
 from pathlib import Path
 from types import SimpleNamespace
 

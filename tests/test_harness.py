@@ -1,6 +1,6 @@
 import json
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import numpy as np
 import pytest
@@ -193,16 +193,24 @@ def test_monitor_failure_aborts_without_advancing():
         h.act(obs())
 
 
-def test_websocket_policy_transport():
+@pytest.mark.parametrize("fail_inference", [False, True])
+def test_websocket_policy_transport(fail_inference, monkeypatch):
     import asyncio
+
+    from websockets.asyncio.server import serve
+
     from twobridge.harness.policy_server import make_handler as policy_handler
     from twobridge.harness.runner import RemotePolicy
-    from websockets.asyncio.server import serve
 
     ready = threading.Event()
     state = {}
     policy = Policy()
     policy.action_dim = 2
+    if fail_inference:
+        def broken_predict(observation, prompt):
+            raise RuntimeError("test inference failure")
+
+        monkeypatch.setattr(policy, "predict", broken_predict)
 
     async def run():
         async with serve(policy_handler(policy), "127.0.0.1", 0) as ws:
@@ -218,9 +226,14 @@ def test_websocket_policy_transport():
     client = None
     try:
         client = RemotePolicy("127.0.0.1", state["port"])
-        actions = client.predict({"state": np.zeros(2), "rgb": obs()["rgb"]}, "open")
-        assert actions.shape == (20, 2)
-        assert policy.prompts == ["open"]
+        observation = {"state": np.zeros(2), "rgb": obs()["rgb"]}
+        if fail_inference:
+            with pytest.raises(RuntimeError, match="Policy inference failed: RuntimeError: test inference failure"):
+                client.predict(observation, "open")
+        else:
+            actions = client.predict(observation, "open")
+            assert actions.shape == (20, 2)
+            assert policy.prompts == ["open"]
     finally:
         if client:
             client.close()
@@ -250,6 +263,7 @@ def test_anthropic_planner_request(server, monkeypatch):
 
 def test_wire_rejects_object_arrays():
     import msgpack
+
     from twobridge.harness.wire import pack, unpack
 
     with pytest.raises(ValueError):

@@ -1,11 +1,11 @@
-from io import BytesIO
 import json
+from io import BytesIO
 
 import numpy as np
-from PIL import Image
 import pyarrow as pa
 import pyarrow.parquet as pq
 import pytest
+from PIL import Image
 
 from twobridge.config import Camera, Config, DatasetConfig, TrainConfig
 

@@ -2,8 +2,8 @@
 
 import importlib
 import importlib.util
-from pathlib import Path
 import sys
+from pathlib import Path
 from types import SimpleNamespace
 
 _PATCHED = False

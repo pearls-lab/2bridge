@@ -2,8 +2,8 @@
 
 import argparse
 import json
-from pathlib import Path
 import tomllib
+from pathlib import Path
 
 from .adapters import BehaviorAdapter, RoboCasaAdapter
 from .clients import FrontierPlanner, VisualMonitor
@@ -15,6 +15,7 @@ class RemotePolicy:
 
     def __init__(self, host, port):
         from websockets.sync.client import connect
+
         from .wire import unpack
 
         self.socket = connect(f"ws://{host}:{port}", compression=None, max_size=32 * 1024 * 1024,
@@ -27,7 +28,8 @@ class RemotePolicy:
         self.socket.send(pack({**observation, "prompt": prompt}))
         response = self.socket.recv(timeout=120)
         if isinstance(response, str):
-            raise RuntimeError(response)
+            # The wire protocol uses text frames to report remote inference errors.
+            raise RuntimeError(response)  # noqa: TRY004 -- server failure, not an invalid argument type
         return unpack(response)["actions"]
 
     def reset(self):

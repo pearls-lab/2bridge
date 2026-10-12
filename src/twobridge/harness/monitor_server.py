@@ -5,15 +5,18 @@ This module never imports the policy backend or its patched Transformers modules
 
 import argparse
 import base64
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import io
 import json
+import logging
 import threading
 import time
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from PIL import Image
 
 from .clients import SYSTEM, parse_yes
+
+logger = logging.getLogger(__name__)
 
 
 class QwenMonitor:
@@ -88,6 +91,7 @@ def make_handler(model):
             except (ValueError, KeyError, TypeError) as exc:
                 self.reply(400, {"error": str(exc)})
             except Exception:
+                logger.exception("Monitor inference failed")
                 self.reply(500, {"error": "Monitor inference failed"})
 
     return Handler

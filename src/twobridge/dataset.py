@@ -4,17 +4,17 @@ Only numeric state/action/index columns are resident in memory. Image Parquet
 shards use a small worker-local cache. Videos are decoded by timestamp with PyAV.
 """
 
-from bisect import bisect_right
-from functools import lru_cache
-from io import BytesIO
 import json
-from pathlib import Path
 import re
+from bisect import bisect_right
+from collections import OrderedDict
+from io import BytesIO
+from pathlib import Path
 
 import av
 import numpy as np
-from PIL import Image, ImageOps
 import pyarrow.parquet as pq
+from PIL import Image, ImageOps
 from torch.utils.data import Dataset
 
 from .config import Config
@@ -77,6 +77,7 @@ class LeRobotData(Dataset):
         if split not in {"train", "val"}:
             raise ValueError("split must be train or val")
         self.config = config
+        self._image_tables = OrderedDict()
         self.root = Path(config.dataset.root)
         self.info = json.loads((self.root / "meta/info.json").read_text())
         self.version = self.info.get("codebase_version")
@@ -216,8 +217,10 @@ class LeRobotData(Dataset):
             )
         return text
 
-    @lru_cache(maxsize=2)
     def _image_table(self, file_index):
+        if file_index in self._image_tables:
+            self._image_tables.move_to_end(file_index)
+            return self._image_tables[file_index]
         keys = list(
             dict.fromkeys(
                 c.key
@@ -225,7 +228,11 @@ class LeRobotData(Dataset):
                 if self.features[c.key]["dtype"] == "image" and not c.image_path
             )
         )
-        return pq.read_table(self.paths[file_index], columns=keys)
+        table = pq.read_table(self.paths[file_index], columns=keys)
+        self._image_tables[file_index] = table
+        if len(self._image_tables) > 2:
+            self._image_tables.popitem(last=False)
+        return table
 
     def _image(self, index, camera):
         key = camera.key
