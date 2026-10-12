@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">Two bridges from frontier reasoning to robot execution</title>
+  <desc id="desc">Autonomous demonstration generation and dense language supervision connect frontier models to a fast local policy. At deployment, frontier instructions guide low-latency robot actions.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#8f99b2"/></marker>
+  </defs>
+  <rect width="1200" height="430" rx="10" fill="#fbfcfe"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <rect x="46" y="135" width="222" height="150" rx="12" fill="#fff" stroke="#cbd3e5" stroke-width="2"/>
+    <circle cx="157" cy="171" r="13" fill="#e7ebf5"/>
+    <path d="m151 171 4 4 8-9" fill="none" stroke="#626e98" stroke-width="2" stroke-linecap="round"/>
+    <text x="157" y="211" fill="#2d3446" font-size="24" font-weight="bold">Frontier reasoning</text>
+    <text x="157" y="240" fill="#687185" font-size="16">Plan · generate · guide</text>
+    <path d="M268 193H302V109H350M268 229H302V305H350" fill="none" stroke="#9da7bf" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="356" y="40" width="485" height="141" rx="12" fill="#edf1fa" stroke="#d3dced"/>
+    <text x="598" y="73" fill="#596b99" font-size="13" font-weight="bold" letter-spacing="2">BRIDGE 1</text>
+    <text x="598" y="111" fill="#303c59" font-size="25" font-weight="bold">Autonomous demonstrations</text>
+    <text x="598" y="145" fill="#61708c" font-size="17">Successful examples + corrective segments</text>
+    <rect x="356" y="235" width="485" height="141" rx="12" fill="#f2edf8" stroke="#e0d5ed"/>
+    <text x="598" y="268" fill="#806696" font-size="13" font-weight="bold" letter-spacing="2">BRIDGE 2</text>
+    <text x="598" y="306" fill="#514061" font-size="25" font-weight="bold">Dense language supervision</text>
+    <text x="598" y="340" fill="#7a688a" font-size="17">Primitive · atomic · composite instructions</text>
+    <path d="M842 109H888V193H929M842 305H888V229H929" fill="none" stroke="#9da7bf" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="935" y="135" width="220" height="150" rx="12" fill="#fff" stroke="#cbd3e5" stroke-width="2"/>
+    <circle cx="1045" cy="171" r="13" fill="#e7ebf5"/>
+    <path d="m1047 161-8 11h6l-2 9 9-13h-7z" fill="#626e98"/>
+    <text x="1045" y="211" fill="#2d3446" font-size="24" font-weight="bold">Fast local policy</text>
+    <text x="1045" y="240" fill="#687185" font-size="16">Responsive robot actions</text>
+    <text x="600" y="411" fill="#7a8190" font-size="14">FRONTIER-GUIDED, LOW-LATENCY EXECUTION</text>
+  </g>
+</svg>

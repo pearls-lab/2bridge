@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2Bridge connects frontier reasoning with fast robot execution through autonomous demonstration generation and dense language supervision.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bridging Frontier Reasoning and Robot Execution">
+  <meta property="og:description" content="From Autonomous Demonstration Generation to Dense Language Supervision">
+  <meta property="og:url" content="https://pearls-lab.github.io/2bridge/">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://pearls-lab.github.io/2bridge/">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/main.js"></script>
+  <title>2Bridge | Bridging Frontier Reasoning and Robot Execution</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="paper-header container">
+    <p class="project-name">2Bridge</p>
+    <!-- Paper metadata: keep the title, authors, social metadata, and BibTeX in sync. -->
+    <h1>Bridging Frontier Reasoning and Robot Execution:<br class="desktop-break">
+      <span>From Autonomous Demonstration Generation<br class="desktop-break"> to Dense Language Supervision</span>
+    </h1>
+    <ul class="authors" aria-label="Authors">
+      <li><a href="https://bosung.github.io/">Bosung Kim</a><sup>1</sup></li>
+      <li><a href="https://alextrevithick.com/">Alexander Trevithick</a><sup>2</sup></li>
+      <li><span>Ruiyi Wang</span><sup>1</sup></li>
+      <li><a href="https://prithvirajva.com/">Prithviraj Ammanabrolu</a><sup>1</sup></li>
+    </ul>
+    <p class="affiliations"><span><sup>1</sup>University of California, San Diego</span><span><sup>2</sup>NVIDIA</span></p>
+    <nav class="resource-links" aria-label="Paper resources">
+      <a class="resource-link" href="https://arxiv.org/pdf/2610.03615">Paper</a>
+      <a class="resource-link" href="https://arxiv.org/abs/2610.03615">arXiv</a>
+      <a class="resource-link" href="https://github.com/pearls-lab/2bridge">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-14-2 18"/></svg>Code
+      </a>
+      <a class="resource-link" href="#bibtex">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 4H5v16h3m8-16h3v16h-3M10 9h4m-4 6h4"/></svg>BibTeX
+      </a>
+    </nav>
+  </header>
+
+  <nav class="story-nav" aria-label="Page sections">
+    <a href="#overview">Overview</a><a href="#autonomous-rollouts">Bridge 1</a><a href="#language-supervision">Bridge 2</a><a href="#both-bridges">Together</a>
+  </nav>
+  <main id="main" class="container">
+    <section class="section media-section first-section" id="overview" aria-labelledby="overview-title">
+      <h2 id="overview-title">How can we bridge frontier intelligence and robot actions?</h2>
+      <p class="section-intro">Five interfaces for robot control, distinguished by what the model outputs and how it becomes physical action.</p>
+      <figure class="paper-figure">
+        <div class="figure-scroll" tabindex="0" role="region" aria-label="Scrollable figure">
+          <a class="figure-link" href="assets/images/robot-control-interfaces.png" aria-label="Open figure at full size"><img class="" src="assets/images/robot-control-interfaces.png" width="2048" height="734" alt="Five interfaces connect task instructions and camera observations to robot actions: a local policy, frontier instructions for a policy, generated code, geometric paths, and direct action commands." loading="eager" fetchpriority="high" decoding="async"></a>
+        </div>
+      </figure>
+    </section>
+
+    <section class="section media-section" id="two-bridges" aria-labelledby="bridges-title">
+      <h2 id="bridges-title">Two bridges between reasoning and execution</h2>
+      <div class="bridge-map">
+        <a class="bridge-route" href="#autonomous-rollouts"><span class="route-number">01</span><span><strong>Learn from frontier demonstrations</strong><span class="route-steps">Generate <span aria-hidden="true">→</span> Train <span aria-hidden="true">→</span> Execute</span></span></a>
+        <a class="bridge-route" href="#language-supervision"><span class="route-number">02</span><span><strong>Learn to follow richer instructions</strong><span class="route-steps">Annotate <span aria-hidden="true">→</span> Understand <span aria-hidden="true">→</span> Execute</span></span></a>
+        <div class="bridge-destination"><span>Frontier guidance</span><span aria-hidden="true">+</span><strong>Fast local control</strong></div>
+      </div>
+    </section>
+
+    <section class="section media-section chapter-start" id="autonomous-rollouts" aria-labelledby="rollouts-title">
+      <p class="section-kicker">Bridge 1 · Autonomous demonstration generation</p>
+      <h2 id="rollouts-title">Autonomous rollouts via in-context learning</h2>
+      <p class="section-intro">We provide five human demonstrations, then let the model control the robot.</p>
+      <div class="rollout-results-grid">
+        <article class="rollout-card">
+          <h3>Claw machine</h3>
+          <div class="rollout-pair">
+            <a class="media-link" href="assets/gifs/gifs/task_a_claw_machine.gif" aria-label="Open claw machine rollout"><img src="assets/gifs/gifs/task_a_claw_machine.gif" width="480" height="368" alt="Autonomous robot rollout: claw machine." loading="lazy" decoding="async"></a>
+            <a class="result-link" href="assets/images/rollout-claw-success.png" aria-label="Open claw machine success plot"><img class="" src="assets/images/rollout-claw-success.png" width="1800" height="1900" alt="Fable 5: 6/10. GPT-6 Astra: 9/10." loading="lazy" decoding="async"></a>
+          </div>
+        </article>
+        <article class="rollout-card">
+          <h3>Stack cups</h3>
+          <div class="rollout-pair">
+            <a class="media-link" href="assets/gifs/gifs/task_b_stack_cups.gif" aria-label="Open stack cups rollout"><img src="assets/gifs/gifs/task_b_stack_cups.gif" width="480" height="368" alt="Autonomous robot rollout: stack cups." loading="lazy" decoding="async"></a>
+            <a class="result-link" href="assets/images/rollout-cups-success.png" aria-label="Open stack cups success plot"><img class="" src="assets/images/rollout-cups-success.png" width="1800" height="1900" alt="Fable 5: 2/10. GPT-6 Astra: 8/10." loading="lazy" decoding="async"></a>
+          </div>
+        </article>
+        <article class="rollout-card">
+          <h3>Fold a cloth</h3>
+          <div class="rollout-pair">
+            <a class="media-link" href="assets/gifs/gifs/task_c_fold_cloth.gif" aria-label="Open fold a cloth rollout"><img src="assets/gifs/gifs/task_c_fold_cloth.gif" width="480" height="368" alt="Autonomous robot rollout: fold a cloth." loading="lazy" decoding="async"></a>
+            <a class="result-link" href="assets/images/rollout-cloth-success.png" aria-label="Open fold a cloth success plot"><img class="" src="assets/images/rollout-cloth-success.png" width="1800" height="1900" alt="Fable 5: 2/10. GPT-6 Astra: 5/10." loading="lazy" decoding="async"></a>
+          </div>
+        </article>
+        <article class="rollout-card">
+          <h3>Close a lid</h3>
+          <div class="rollout-pair">
+            <a class="media-link" href="assets/gifs/task_d_close_lid.gif" aria-label="Open close a lid rollout"><img src="assets/gifs/task_d_close_lid.gif" width="480" height="368" alt="Autonomous robot rollout: close a lid." loading="lazy" decoding="async"></a>
+            <a class="result-link" href="assets/images/rollout-lid-success.png" aria-label="Open close a lid success plot"><img class="" src="assets/images/rollout-lid-success.png" width="1800" height="1900" alt="Fable 5: 0/10. GPT-6 Astra: 2/10." loading="lazy" decoding="async"></a>
+          </div>
+        </article>
+      </div>
+      <p class="figure-note">Successes out of 10 independent trials per model and task.</p>
+      <p class="takeaway">Successful examples alone are not enough for precise contact.</p>
+    </section>
+
+    <section class="section media-section" id="corrective-segments" aria-labelledby="corrections-title">
+      <h2 id="corrections-title">Show the model how to correct errors</h2>
+      <p class="section-intro">Corrective demonstration segments teach small adjustments when execution goes wrong.</p>
+      <div class="media-grid correction-grid">
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/grip_north_01.gif" aria-label="Open grip north animation at full size">
+            <img src="assets/gifs/gifs/grip_north_01.gif" width="400" height="400" alt="Corrective demonstration segment: grip, north adjustment." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Grip · North</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/grip_east_01.gif" aria-label="Open grip east animation at full size">
+            <img src="assets/gifs/gifs/grip_east_01.gif" width="400" height="400" alt="Corrective demonstration segment: grip, east adjustment." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Grip · East</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/grip_south_01.gif" aria-label="Open grip south animation at full size">
+            <img src="assets/gifs/gifs/grip_south_01.gif" width="400" height="400" alt="Corrective demonstration segment: grip, south adjustment." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Grip · South</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/grip_south_west_01.gif" aria-label="Open grip southwest animation at full size">
+            <img src="assets/gifs/gifs/grip_south_west_01.gif" width="400" height="400" alt="Corrective demonstration segment: grip, southwest adjustment." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Grip · Southwest</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/place_north_east_01.gif" aria-label="Open place northeast animation at full size">
+            <img src="assets/gifs/gifs/place_north_east_01.gif" width="400" height="400" alt="Corrective demonstration segment: place, northeast adjustment." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Place · Northeast</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/place_east_01.gif" aria-label="Open place east animation at full size">
+            <img src="assets/gifs/gifs/place_east_01.gif" width="400" height="400" alt="Corrective demonstration segment: place, east adjustment." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Place · East</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/place_south_west_01.gif" aria-label="Open place southwest animation at full size">
+            <img src="assets/gifs/gifs/place_south_west_01.gif" width="400" height="400" alt="Corrective demonstration segment: place, southwest adjustment." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Place · Southwest</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/place_north_west_02.gif" aria-label="Open place northwest animation at full size">
+            <img src="assets/gifs/gifs/place_north_west_02.gif" width="400" height="400" alt="Corrective demonstration segment: place, northwest adjustment." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Place · Northwest</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/crosscube_grip_left_01.gif" aria-label="Open crosscube grip left animation at full size">
+            <img src="assets/gifs/gifs/crosscube_grip_left_01.gif" width="400" height="400" alt="Crosscube corrective demonstration: grip adjustment, left." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Crosscube · Left</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/crosscube_grip_right_01.gif" aria-label="Open crosscube grip right animation at full size">
+            <img src="assets/gifs/gifs/crosscube_grip_right_01.gif" width="400" height="400" alt="Crosscube corrective demonstration: grip adjustment, right." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Crosscube · Right</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/crosscube_grip_nearer_01.gif" aria-label="Open crosscube grip nearer animation at full size">
+            <img src="assets/gifs/gifs/crosscube_grip_nearer_01.gif" width="400" height="400" alt="Crosscube corrective demonstration: grip adjustment, nearer." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Crosscube · Nearer</figcaption>
+        </figure>
+        <figure class="media-card">
+          <a class="media-link" href="assets/gifs/gifs/crosscube_grip_farther_01.gif" aria-label="Open crosscube grip farther animation at full size">
+            <img src="assets/gifs/gifs/crosscube_grip_farther_01.gif" width="400" height="400" alt="Crosscube corrective demonstration: grip adjustment, farther." loading="lazy" decoding="async">
+          </a>
+          <figcaption>Crosscube · Farther</figcaption>
+        </figure>
+      </div>
+      <div class="correction-results">
+        <a class="static-figure-link" href="assets/images/correction-results-pick-place.png" aria-label="Open correction results for claw machine and cups"><img class="" src="assets/images/correction-results-pick-place.png" width="1308" height="494" alt="Corrective segments improve both models on claw machine and stacking cups. Astra reaches 10/10 on both tasks." loading="lazy" decoding="async"></a>
+        <a class="static-figure-link" href="assets/images/correction-results-cloth-lid.png" aria-label="Open correction results for cloth and lid"><img class="" src="assets/images/correction-results-cloth-lid.png" width="1370" height="456" alt="With corrective segments, Fable improves from 2/10 to 4/10 on cloth and 0/10 to 2/10 on lid; Astra improves from 5/10 to 7/10 and 2/10 to 5/10." loading="lazy" decoding="async"></a>
+      </div>
+      <p class="figure-note">With corrective examples, autonomous generation succeeds more often across all four tasks.</p>
+    </section>
+
+    <section class="section media-section" id="generation-efficiency" aria-labelledby="efficiency-title">
+      <h2 id="efficiency-title">Generation efficiency with accumulated examples</h2>
+      <p class="section-intro">Reuse successful segments. Spend less time and API cost on the next rollout.</p>
+      <figure class="paper-figure">
+        <div class="figure-scroll" tabindex="0" role="region" aria-label="Scrollable figure">
+          <a class="figure-link" href="assets/images/fig4.png" aria-label="Open figure at full size"><img class="" src="assets/images/fig4.png" width="6840" height="1770" alt="Generation time and API cost across ten successful episodes for claw machine, stacking cups, folding cloth, and closing a lid." loading="lazy" decoding="async"></a>
+        </div>
+        <figcaption>Figure 4 · Time in minutes (bars) and API cost in USD (lines). Successful episodes only; failed attempts excluded. <a href="assets/images/fig4.png">View full size</a>.<span class="mobile-figure-hint">Swipe to explore the full figure.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="section media-section" id="frontier-harness" aria-labelledby="harness-title">
+      <h2 id="harness-title">Frontier guidance. Faster local execution.</h2>
+      <div class="stat-strip">
+        <div><strong>51.25% <span aria-hidden="true">→</span> 65%</strong><span>Success: local policy → harness</span></div>
+        <div><strong>40–60% less time</strong><span>Versus direct frontier control, on successful trials</span></div>
+      </div>
+      <figure class="paper-figure">
+        <div class="figure-scroll" tabindex="0" role="region" aria-label="Scrollable figure">
+          <a class="figure-link" href="assets/images/harness-success-time.png" aria-label="Open figure at full size"><img class="" src="assets/images/harness-success-time.png" width="2048" height="420" alt="Success and elapsed time across four tasks: harness control improves the balance between success and execution time compared with direct Astra control or policy alone." loading="lazy" decoding="async"></a>
+        </div>
+        <figcaption>20 trials per task and configuration. Elapsed time averages successful trials only. <a href="assets/images/harness-success-time.png">View full size</a>.<span class="mobile-figure-hint">Swipe to explore the full figure.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="section media-section" id="language-supervision" aria-labelledby="language-title">
+      <p class="b2-eyebrow">Bridge 2 · Dense language supervision</p>
+      <h2 id="language-title">One trajectory. Many ways to guide it.</h2>
+      <p class="section-intro">Teach the local policy at every scale, with varied language.</p>
+      <div class="b2-annotation-layout">
+        <figure class="b2-demo">
+          <a href="assets/gifs/apple-transfer.gif" aria-label="Open the apple-transfer demonstration at full size">
+            <img src="assets/gifs/apple-transfer.gif" width="512" height="512" alt="A robot transfers an apple from a cabinet into a bowl." loading="lazy" decoding="async">
+          </a>
+          <figcaption>The same movement, richly annotated.</figcaption>
+        </figure>
+        <div class="b2-annotation-content">
+          <h3>From task to movement</h3>
+          <ol class="b2-hierarchy">
+            <li><span class="b2-level">Composite · Task</span><p>Open the cabinet, transfer the fruit, close the cabinet.</p></li>
+            <li><span class="b2-level">Atomic · Subtask</span><p>Transfer the apple into the bowl.</p></li>
+            <li><span class="b2-level">Primitive · Movement</span><p>Reach → grasp → lift → carry → lower → release → retract.</p></li>
+          </ol>
+          <h3>Different words, the same goal</h3>
+          <ul class="b2-phrasing" aria-label="Alternative instructions for apple transfer">
+            <li>“Put the apple in the bowl.”</li>
+            <li>“Move the apple from inside the cabinet into the bowl on the counter.”</li>
+            <li>“Take the apple out of the cabinet and pop it into the bowl.”</li>
+          </ul>
+          <a class="b2-detail-link" href="assets/images/language-annotations.png">View full annotation examples</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section media-section" id="instruction-following" aria-labelledby="instruction-title">
+      <h2 id="instruction-title">Fine-grained commands. More reliable execution.</h2>
+      <p class="section-intro">Compliance with individual movement instructions.</p>
+      <div class="b2-command-grid">
+        <article class="b2-command">
+          <h3>“Lift the object up”</h3>
+          <a class="media-link b2-command-media" href="assets/gifs/command-lift-kettle.gif" aria-label="Open the lifting demonstration at full size">
+            <img src="assets/gifs/command-lift-kettle.gif" width="360" height="360" alt="Illustrative demonstration: the robot lifts a red kettle while the arm and kettle remain visible." loading="lazy" decoding="async">
+          </a>
+          <dl class="b2-bars">
+            <div class="b2-bar-row"><dt>Baseline</dt><dd><span class="b2-bar-track" aria-hidden="true"><span class="b2-bar b2-baseline" style="width:25%"></span></span><strong>25.0%</strong></dd></div>
+            <div class="b2-bar-row"><dt>Hierarchical</dt><dd><span class="b2-bar-track" aria-hidden="true"><span class="b2-bar b2-ours" style="width:83.3%"></span></span><strong>83.3%</strong></dd></div>
+          </dl>
+        </article>
+        <article class="b2-command">
+          <h3>“Move the arm down”</h3>
+          <a class="media-link b2-command-media" href="assets/gifs/command-arm-down.gif" aria-label="Open the downward-motion demonstration at full size">
+            <img src="assets/gifs/command-arm-down.gif" width="360" height="360" alt="Illustrative demonstration: the robot lowers its arm while holding a banana over the sink." loading="lazy" decoding="async">
+          </a>
+          <dl class="b2-bars">
+            <div class="b2-bar-row"><dt>Baseline</dt><dd><span class="b2-bar-track" aria-hidden="true"><span class="b2-bar b2-baseline" style="width:11.1%"></span></span><strong>11.1%</strong></dd></div>
+            <div class="b2-bar-row"><dt>Hierarchical</dt><dd><span class="b2-bar-track" aria-hidden="true"><span class="b2-bar b2-ours" style="width:77.8%"></span></span><strong>77.8%</strong></dd></div>
+          </dl>
+        </article>
+        <article class="b2-command">
+          <h3>“Move the arm back”</h3>
+          <a class="media-link b2-command-media" href="assets/gifs/command-arm-back.gif" aria-label="Open the arm-retraction demonstration at full size">
+            <img src="assets/gifs/command-arm-back.gif" width="360" height="360" alt="Illustrative demonstration: the robot withdraws its empty gripper from the mug shelf." loading="lazy" decoding="async">
+          </a>
+          <dl class="b2-bars">
+            <div class="b2-bar-row"><dt>Baseline</dt><dd><span class="b2-bar-track" aria-hidden="true"><span class="b2-bar b2-baseline" style="width:2.8%"></span></span><strong>2.8%</strong></dd></div>
+            <div class="b2-bar-row"><dt>Hierarchical</dt><dd><span class="b2-bar-track" aria-hidden="true"><span class="b2-bar b2-ours" style="width:44.4%"></span></span><strong>44.4%</strong></dd></div>
+          </dl>
+        </article>
+      </div>
+      <p class="b2-source-note">Illustrative demonstrations · Separate compliance evaluation: 36 trials per command, one training seed.</p>
+      <div class="b2-robustness">
+        <h3>Across planners and phrasings</h3>
+        <p class="b2-short-note">Highest reported success across all three tested planners, with original and rephrased instructions.</p>
+        <ul class="b2-planners" aria-label="Success rates for hierarchical and multi-aspect language supervision">
+          <li><h4>Opus 5</h4><p><strong>48.8%</strong><span aria-label="to">→</span><strong>47.1%</strong></p></li>
+          <li><h4>Gemini-3.1-Pro</h4><p><strong>46.7%</strong><span aria-label="to">→</span><strong>45.4%</strong></p></li>
+          <li><h4>Fable 5</h4><p><strong>49.2%</strong><span aria-label="to">→</span><strong>48.3%</strong></p></li>
+        </ul>
+        <p class="b2-source-note">Original → rephrased success rate · Hierarchical + multi-aspect supervision · RoboCasa 365, seed 42.</p>
+        <details class="b2-results-details">
+          <summary>Compare all supervision settings</summary>
+          <figure class="paper-figure">
+            <a href="assets/images/instruction-robustness.png" aria-label="Open the complete instruction robustness table at full size">
+              <img src="assets/images/instruction-robustness.png" width="1638" height="474" alt="RoboCasa 365 task success rates, seed 42. Hierarchical plus multi-aspect supervision outperforms subtask-level, hierarchical-only, and multi-aspect-only supervision for Opus 5, Gemini-3.1-Pro, and Fable 5 on both original and rephrased instructions." loading="lazy" decoding="async">
+            </a>
+            <figcaption>Rephrased instructions are generated by Fable 5 and preserve the task goal. <a href="assets/images/instruction-robustness.png">View full size</a>.</figcaption>
+          </figure>
+        </details>
+      </div>
+    </section>
+
+    <section class="section media-section chapter-start" id="both-bridges" aria-labelledby="together-title">
+      <p class="section-kicker">Both bridges together</p>
+      <h2 id="together-title">Reason, place, and build a physical crossword</h2>
+      <p class="section-intro">Frontier planning and local-policy execution on the physical crossword task.</p>
+      <figure class="demo-feature" id="crossword-demo" data-video-src="assets/videos/crossword-demo.mp4">
+        <div class="demo-preview" id="crossword-preview">
+          <img src="assets/images/crossword-demo-poster.jpg" width="1200" height="720" alt="Physical crossword demo: a robot places letter cubes on a board, with overhead and wrist camera views." loading="lazy">
+          <span class="demo-status">Demo preview · full video coming soon</span>
+        </div>
+        <video id="crossword-video" controls playsinline preload="none" poster="assets/images/crossword-demo-poster.jpg" aria-label="Physical crossword robot demonstration" hidden>
+          Your browser does not support embedded video.
+        </video>
+      </figure>
+      <div class="combined-results">
+        <div class="instruction-example"><span class="mini-label">Changing the instruction</span><p>“Put the cube on 1A.”</p><span class="instruction-arrow" aria-hidden="true">↓</span><p>“Put the cube to the left of the B cube.”</p><span class="figure-note">Dense supervision supports varied spatial descriptions.</span></div>
+        <figure class="paper-figure">
+        <div class="figure-static" >
+          <a class="static-figure-link" href="assets/images/crossword-results.png" aria-label="Open figure at full size"><img class="" src="assets/images/crossword-results.png" width="1540" height="734" alt="Mean crossword scores: Fable 5 direct control 4.8, Astra direct control 8.0, Astra harness 14.4, and Astra harness with dense supervision 15.6." loading="lazy" decoding="async"></a>
+        </div>
+        <figcaption>Mean score over 5 games · 1-hour budget per game. <a href="assets/images/crossword-results.png">View full size</a>.</figcaption>
+      </figure>
+      </div>
+    </section>
+
+    <section class="section media-section" id="physical-execution" aria-labelledby="execution-title">
+      <h2 id="execution-title">More time acting. Less time waiting.</h2>
+      <div class="execution-summary">
+        <div><span>Direct control</span><strong>2m 40s</strong></div><span class="comparison-arrow" aria-hidden="true">→</span><div><span>Frontier harness</span><strong>9m 8.55s</strong></div><div class="execution-gain"><strong>3.4×</strong><span>time executing actions</span></div>
+      </div>
+      <p class="figure-note">Cumulative action time over one hour · one run per configuration.</p>
+      <figure class="paper-figure">
+        <div class="figure-scroll" tabindex="0" role="region" aria-label="Scrollable figure">
+          <a class="figure-link" href="assets/images/execution-timeline.png" aria-label="Open figure at full size"><img class="" src="assets/images/execution-timeline.png" width="1900" height="834" alt="Timeline comparing direct control and the frontier harness: the harness allocates more of the elapsed time to robot action execution." loading="lazy" decoding="async"></a>
+        </div>
+        <figcaption>First 20 minutes shown. Orange: action execution; light blue: observation and reasoning. <a href="assets/images/execution-timeline.png">View full size</a>.<span class="mobile-figure-hint">Swipe to explore the full figure.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="section reading-width" id="bibtex" aria-labelledby="bibtex-title">
+      <div class="citation-heading"><h2 id="bibtex-title">BibTeX</h2><button id="copy-citation" class="copy-button" type="button" hidden>Copy</button></div>
+      <pre><code id="citation">@misc{kim2026bridging,
+  title = {Bridging Frontier Reasoning and Robot Execution:
+           From Autonomous Demonstration Generation to Dense Language Supervision},
+  author = {Kim, Bosung and Trevithick, Alexander and Wang, Ruiyi
+            and Ammanabrolu, Prithviraj},
+  year = {2026},
+  eprint = {2610.03615},
+  archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2610.03615}
+}</code></pre>
+      <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+    </section>
+    <!-- Add paper acknowledgements here when finalized. -->
+  </main>
+</body>
+</html>

@@ -1,0 +1,59 @@
+# Example only: the generic trainer contains no board/tray/letter logic.
+# Uses a converted dataset with overhead, wrist and tray-crop camera streams.
+[dataset]
+root = "../datasets/crossword"
+state_key = "observation.state"
+action_key = "action"
+prompt_key = "prompt"
+val_episodes = []  # Set held-out episode/layout IDs before reporting validation.
+
+[[dataset.cameras]]
+key = "observation.images.robot0_agentview_left"
+resize = "stretch"
+image_path = "images/{camera_key}/episode_{episode_index:06d}_frame_{frame_index:06d}.jpg"
+
+[[dataset.cameras]]
+key = "observation.images.robot0_eye_in_hand"
+resize = "stretch"
+image_path = "images/{camera_key}/episode_{episode_index:06d}_frame_{frame_index:06d}.jpg"
+
+[[dataset.cameras]]
+key = "observation.images.robot0_agentview_right"
+resize = "stretch"
+image_path = "images/{camera_key}/episode_{episode_index:06d}_frame_{frame_index:06d}.jpg"
+
+[training]
+output = "../runs/crossword"
+weights = "../checkpoints/pi05_base/model.safetensors"
+tokenizer = "../checkpoints/paligemma_tokenizer.model"
+steps = 8000
+batch_size = 32
+horizon = 10
+lr = 2.5e-5
+end_lr = 2.5e-6
+warmup_steps = 500
+save_every = 2000
+precision = "bfloat16"
+gradient_checkpointing = true
+# Matches the historical six-dimensional derivative slice, including the gripper.
+# Generic datasets must choose their own dimensions rather than copying this blindly.
+deriv_weight = 0.1
+deriv_dims = [0, 1, 2, 3, 4, 5]
+
+# The original converted export omitted standard feature metadata. Supply it
+# explicitly; this adapter is optional and works for any similarly structured export.
+[dataset.feature_overrides."observation.state"]
+dtype = "float32"
+shape = [6]
+[dataset.feature_overrides."action"]
+dtype = "float32"
+shape = [6]
+[dataset.feature_overrides."observation.images.robot0_agentview_left"]
+dtype = "image"
+shape = [224, 224, 3]
+[dataset.feature_overrides."observation.images.robot0_eye_in_hand"]
+dtype = "image"
+shape = [224, 224, 3]
+[dataset.feature_overrides."observation.images.robot0_agentview_right"]
+dtype = "image"
+shape = [224, 224, 3]

@@ -1,0 +1,43 @@
+[run]
+benchmark = "behavior"
+# Supply a concrete OmniGibson task/scene/R1Pro config from your installation.
+env_config = "../behavior_task.yaml"
+task = "Sort the vegetables into their appropriate containers."
+episode = "sorting_vegetables/instance-0"
+max_steps = 10000
+output = "../runs/behavior-instance0"
+plan_cache = "../plans/behavior-instance0.json"
+
+[policy]
+kind = "websocket"
+host = "127.0.0.1"
+port = 8000
+
+[adapter]
+# For a release checkpoint, change these to its dataset feature names.
+feature_keys = ["observation/image_0", "observation/image_1", "observation/image_2"]
+state_key = "observation/state"
+# Native R1Pro state25 projection. A legacy OpenPI server that performs its own
+# projection needs ALL raw proprio indices instead; see docs/frontier-harness.md.
+state_indices = [0,1,2,53,54,55,56,3,4,5,6,7,8,9,24,25,28,29,30,31,32,33,34,49,50]
+action_dim = 23
+
+[planner]
+provider = "anthropic"
+url = "https://api.anthropic.com/v1/messages"
+model = "SET_YOUR_AVAILABLE_FRONTIER_MODEL_ID"
+key_env = "ANTHROPIC_API_KEY"
+
+[monitor]
+protocol = "legacy"
+url = "http://127.0.0.1:8001"
+model = "qwen3.6-27b"
+timeout = 120
+
+[harness]
+# Existing BEHAVIOR serving code defaults to 100; not the RoboCasa 40-step setting.
+poll_interval = 100
+confirmations = 2
+image_size = 512
+action_horizon = 16
+prompt_template = "{task} Now: {subgoal}"

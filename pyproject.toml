@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "twobridge-policy"
+version = "0.1.0"
+description = "Task-independent Pi0.5 fine-tuning on LeRobot datasets"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+dependencies = [
+  "numpy>=1.26,<2", "pyarrow>=20,<21", "Pillow>=11,<12", "av>=14,<18",
+  "torch==2.7.1", "torchvision==0.22.1", "transformers==4.53.2",
+  "safetensors>=0.5,<0.6", "sentencepiece>=0.2,<0.3",
+]
+
+[project.optional-dependencies]
+harness = ["websockets>=15,<16", "msgpack>=1,<2"]
+dev = ["pytest>=8.3,<9", "ruff>=0.11,<1", "build>=1.2,<2"]
+hub = ["huggingface-hub>=0.33,<1"]
+
+[project.scripts]
+2bridge = "twobridge.cli:main"
+2bridge-harness = "twobridge.harness.runner:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"twobridge._vendor" = ["transformers_replace/models/*/*.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+extend-exclude = ["src/twobridge/_vendor"]

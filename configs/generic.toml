@@ -1,0 +1,41 @@
+# Paths are relative to this file. Feature names come from meta/info.json.
+[dataset]
+root = "../datasets/my_dataset"
+state_key = "observation.state"
+action_key = "action"
+# Instructions use each frame's task_index -> meta/tasks.jsonl or tasks.parquet.
+# To use a string column instead: prompt_key = "instruction"
+# For truly fixed-instruction data only: default_prompt = "Pick up the object"
+# Explicit splits are episode IDs, NOT frame indices. Prefer held-out scenes/layouts.
+# train_episodes = [0, 1, 2, 3]
+val_episodes = []
+# Absolute actions are kept as recorded. To subtract observation-time state:
+# relative_pairs = [[0, 0], [1, 1], [2, 2]]
+
+[[dataset.cameras]]
+key = "observation.images.front"
+resize = "letterbox"
+
+[[dataset.cameras]]
+key = "observation.images.wrist"
+resize = "letterbox"
+
+[training]
+output = "../runs/my_policy"
+weights = "../checkpoints/pi05_base/model.safetensors"
+tokenizer = "../checkpoints/paligemma_tokenizer.model"
+steps = 8000
+batch_size = 32
+accumulation_steps = 1
+horizon = 10
+workers = 0
+seed = 42
+lr = 2.5e-5
+end_lr = 2.5e-6
+warmup_steps = 500
+save_every = 2000
+precision = "bfloat16"
+gradient_checkpointing = true
+# Optional Sobolev loss. Choose continuous dimensions for YOUR action space.
+deriv_weight = 0.0
+deriv_dims = []

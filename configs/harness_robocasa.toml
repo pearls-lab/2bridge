@@ -1,0 +1,39 @@
+# Paths relative to this file. Camera feature names must match the checkpoint/server.
+[run]
+benchmark = "robocasa"
+env_task = "MakeFruitBowl"
+task = "Open the cabinet, place the apple and banana in the bowl, and close the cabinet."
+episode = "MakeFruitBowl/seed-0"
+seed = 0
+split = "target"
+max_steps = 3000
+output = "../runs/robocasa-seed0"
+plan_cache = "../plans/robocasa-seed0.json"
+
+[policy]
+kind = "websocket"
+host = "127.0.0.1"
+port = 8000
+
+[adapter]
+feature_keys = ["observation/agentview_left", "observation/eye_in_hand", "observation/agentview_right"]
+state_key = "observation/state"
+
+[planner]
+provider = "anthropic"
+url = "https://api.anthropic.com/v1/messages"
+model = "SET_YOUR_AVAILABLE_FRONTIER_MODEL_ID"
+key_env = "ANTHROPIC_API_KEY"
+
+[monitor]
+protocol = "legacy"
+url = "http://127.0.0.1:8001"
+model = "qwen3.6-27b"
+timeout = 120
+
+[harness]
+poll_interval = 40
+confirmations = 2
+image_size = 512
+action_horizon = 8
+prompt_template = "{task} Now: {subgoal}"

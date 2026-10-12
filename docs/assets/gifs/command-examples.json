@@ -1,0 +1,85 @@
+[
+  {
+    "id": "L3",
+    "label": "Lift the red kettle",
+    "task": "KettleBoiling",
+    "episode": 8,
+    "remote_source": "jeju-0.ucsd.edu:/home/bkim/primv4c_pilot_gallery/clips/062_lift.gif",
+    "camera": "left",
+    "source_frame_range_inclusive": [
+      4,
+      39
+    ],
+    "output_file": "command-lift-kettle.gif",
+    "preview_source": "L3.gif",
+    "preview_crop_xyxy": [
+      8,
+      44,
+      368,
+      404
+    ],
+    "dimensions": [
+      360,
+      360
+    ],
+    "source_preview_frames": 36,
+    "output_frames": 36,
+    "loop_duration_ms": 6040,
+    "output_size_bytes": 2827507,
+    "playback_note": "Exact approved preview pixels and frame timing retained; identical held frames may be merged without changing playback.",
+    "provenance_note": "Illustrative training demonstration, not a policy evaluation rollout.",
+    "source_gallery_version": "v4c"
+  },
+  {
+    "id": "D1",
+    "label": "Down into the sink",
+    "task": "DefrostByCategory",
+    "episode": "20",
+    "remote_source": "jeju-0.ucsd.edu:/home/bkim/v5_gallery/clips/c4ba6508_lower.mp4",
+    "camera": "left",
+    "source_frame_range_inclusive": [
+      2,
+      36
+    ],
+    "output_file": "command-arm-down.gif",
+    "preview_source": "D1.gif",
+    "preview_crop_xyxy": null,
+    "dimensions": [
+      360,
+      360
+    ],
+    "source_preview_frames": 55,
+    "output_frames": 55,
+    "loop_duration_ms": 2750,
+    "output_size_bytes": 852729,
+    "playback_note": "Exact approved preview pixels and frame timing retained; identical held frames may be merged without changing playback.",
+    "provenance_note": "Illustrative training demonstration, not a policy evaluation rollout.",
+    "source_gallery_version": "v5"
+  },
+  {
+    "id": "B1",
+    "label": "Back from the mug shelf",
+    "task": "OrganizeMugsByHandle",
+    "episode": "13",
+    "remote_source": "jeju-0.ucsd.edu:/home/bkim/v5_gallery/clips/4f3927c7_retract.mp4",
+    "camera": "left",
+    "source_frame_range_inclusive": [
+      2,
+      43
+    ],
+    "output_file": "command-arm-back.gif",
+    "preview_source": "B1.gif",
+    "preview_crop_xyxy": null,
+    "dimensions": [
+      360,
+      360
+    ],
+    "source_preview_frames": 62,
+    "output_frames": 62,
+    "loop_duration_ms": 3100,
+    "output_size_bytes": 1121146,
+    "playback_note": "Exact approved preview pixels and frame timing retained; identical held frames may be merged without changing playback.",
+    "provenance_note": "Illustrative training demonstration, not a policy evaluation rollout.",
+    "source_gallery_version": "v5"
+  }
+]

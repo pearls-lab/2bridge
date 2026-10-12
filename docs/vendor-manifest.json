@@ -1,0 +1,34 @@
+{
+  "pi0_pytorch.py": {
+    "origin": "Physical-Intelligence/openpi, local source snapshot",
+    "sha256_before_adaptation": "6f3c48814e9234f58d7bb3178afe40a56da40608404c9cfb9bcf4263dab50365"
+  },
+  "gemma_pytorch.py": {
+    "origin": "Physical-Intelligence/openpi, local source snapshot",
+    "sha256_before_adaptation": "225092e06509da0ae37bb9dca55c00d2804255bb1496f7c8700304b4c52a95eb"
+  },
+  "gemma.py": {
+    "origin": "Physical-Intelligence/openpi, local source snapshot",
+    "sha256_before_adaptation": "679a9c9c538de672312a67383d61cb0250317957a6c583f06963e0bb20b6c597"
+  },
+  "models/siglip/modeling_siglip.py": {
+    "origin": "OpenPI Transformers 4.53.2 replacements",
+    "sha256": "ef2e99500f263fdd78db9d4d9a255e29d844eb92f53c25ad640f8056700ef84b"
+  },
+  "models/siglip/check.py": {
+    "origin": "OpenPI Transformers 4.53.2 replacements",
+    "sha256": "466e8eb7887ac5ccc98118a3169298d6ab65a284d834bae74751e3854dbc4245"
+  },
+  "models/gemma/configuration_gemma.py": {
+    "origin": "OpenPI Transformers 4.53.2 replacements",
+    "sha256": "26fd0d0f52730ab32b6f337eb73ae9a26cb71ae0915bc49eced1d0e2ed8d0ec6"
+  },
+  "models/gemma/modeling_gemma.py": {
+    "origin": "OpenPI Transformers 4.53.2 replacements",
+    "sha256": "17eeb54e277939e58cd6f8a92719a275e36baf0c9f463b2754227d42f87aedde"
+  },
+  "models/paligemma/modeling_paligemma.py": {
+    "origin": "OpenPI Transformers 4.53.2 replacements",
+    "sha256": "c945d330b829264f927f3ee5339f977238631772de07a28e855e265bb85fd53c"
+  }
+}
